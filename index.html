@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+          maximum-scale=1.0, user-scalable=no">
+
+    <title>Penalty Shootout</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="game">
+
+    <h1>⚽ Penalty Shootout</h1>
+
+    <p id="playerName">Welcome!</p>
+
+    <div class="scoreboard">
+        <div>
+            <span>GOALS</span>
+            <strong id="goals">0</strong>
+        </div>
+
+        <div>
+            <span>SHOTS</span>
+            <strong id="shots">0/5</strong>
+        </div>
+
+        <div>
+            <span>BEST</span>
+            <strong id="best">0</strong>
+        </div>
+    </div>
+
+    <div class="stadium">
+
+        <div class="goal">
+
+            <div id="keeper">🧤</div>
+
+            <div id="ball">⚽</div>
+
+        </div>
+
+        <div id="result">
+            Choose where to shoot!
+        </div>
+
+    </div>
+
+    <div class="controls">
+
+        <button onclick="shoot('left')">
+            ⬅️
+            <span>LEFT</span>
+        </button>
+
+        <button onclick="shoot('center')">
+            ⬆️
+            <span>CENTER</span>
+        </button>
+
+        <button onclick="shoot('right')">
+            ➡️
+            <span>RIGHT</span>
+        </button>
+
+    </div>
+
+    <button id="startButton" onclick="startGame()">
+        🚀 START SHOOTOUT
+    </button>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
