@@ -16,31 +16,40 @@ if (user) {
         `👋 ${user.first_name}`;
 }
 
-let bestScore = Number(localStorage.getItem("penaltyBest")) || 0;
+let bestScore =
+    Number(localStorage.getItem("penaltyBest")) || 0;
 
-document.getElementById("best").textContent = bestScore;
+document.getElementById("best").textContent =
+    bestScore;
+
 
 const keeper = document.getElementById("keeper");
 const ball = document.getElementById("ball");
+const kicker = document.getElementById("kicker");
 const result = document.getElementById("result");
 const startButton = document.getElementById("startButton");
+
 
 function startGame() {
 
     goals = 0;
     shots = 0;
+
     gameRunning = true;
 
-    document.getElementById("goals").textContent = goals;
-    document.getElementById("shots").textContent =
-        `${shots}/${TOTAL_SHOTS}`;
+    document.getElementById("goals").textContent = "0";
 
-    result.textContent = "🎯 Choose where to shoot!";
+    document.getElementById("shots").textContent =
+        `0/${TOTAL_SHOTS}`;
+
+    result.textContent =
+        "🎯 Choose where to shoot!";
 
     startButton.style.display = "none";
 
-    resetPositions();
+    resetScene();
 }
+
 
 function shoot(direction) {
 
@@ -48,35 +57,121 @@ function shoot(direction) {
 
     if (shots >= TOTAL_SHOTS) return;
 
+
     shots++;
 
-    const directions = ["left", "center", "right"];
+    const directions = [
+        "left",
+        "center",
+        "right"
+    ];
+
 
     const keeperDirection =
-        directions[Math.floor(Math.random() * directions.length)];
+        directions[
+            Math.floor(
+                Math.random() * directions.length
+            )
+        ];
 
-    moveBall(direction);
 
-    moveKeeper(keeperDirection);
+    // Kicker movement
+
+    kicker.style.transform =
+        "translateX(-50%) rotate(-8deg)";
+
+
+    // Move ball
+
+    if (direction === "left") {
+
+        ball.style.left = "28%";
+        ball.style.bottom = "245px";
+        ball.style.transform =
+            "translateX(-50%) scale(0.72)";
+
+    }
+
+
+    if (direction === "center") {
+
+        ball.style.left = "50%";
+        ball.style.bottom = "260px";
+        ball.style.transform =
+            "translateX(-50%) scale(0.68)";
+
+    }
+
+
+    if (direction === "right") {
+
+        ball.style.left = "72%";
+        ball.style.bottom = "245px";
+        ball.style.transform =
+            "translateX(-50%) scale(0.72)";
+    }
+
+
+    // Goalkeeper movement
+
+    if (keeperDirection === "left") {
+
+        keeper.style.left = "25%";
+
+        keeper.style.transform =
+            "translateX(-50%) rotate(-35deg)";
+
+    }
+
+
+    if (keeperDirection === "center") {
+
+        keeper.style.left = "50%";
+
+        keeper.style.transform =
+            "translateX(-50%)";
+    }
+
+
+    if (keeperDirection === "right") {
+
+        keeper.style.left = "75%";
+
+        keeper.style.transform =
+            "translateX(-50%) rotate(35deg)";
+    }
+
+
+    // Determine result
 
     if (direction === keeperDirection) {
 
-        result.textContent = "🧤 SAVED!";
+        result.textContent =
+            "🧤 SAVED!";
 
     } else {
 
         goals++;
 
-        result.textContent = "⚽ GOOOOAL!";
-
+        result.textContent =
+            "⚽ GOOOOAL!";
     }
 
-    document.getElementById("goals").textContent = goals;
+
+    document.getElementById("goals").textContent =
+        goals;
 
     document.getElementById("shots").textContent =
         `${shots}/${TOTAL_SHOTS}`;
 
+
+    // Prepare next shot
+
     setTimeout(() => {
+
+        kicker.style.transform =
+            "translateX(-50%)";
+
 
         if (shots >= TOTAL_SHOTS) {
 
@@ -84,80 +179,37 @@ function shoot(direction) {
 
         } else {
 
-            resetPositions();
+            resetScene();
 
             result.textContent =
                 `🎯 Penalty ${shots + 1} of ${TOTAL_SHOTS}`;
-
         }
 
-    }, 900);
+    }, 850);
 }
 
-function moveBall(direction) {
 
-    if (direction === "left") {
-
-        ball.style.left = "25%";
-        ball.style.bottom = "90px";
-
-    }
-
-    if (direction === "center") {
-
-        ball.style.left = "50%";
-        ball.style.bottom = "120px";
-
-    }
-
-    if (direction === "right") {
-
-        ball.style.left = "75%";
-        ball.style.bottom = "90px";
-
-    }
-}
-
-function moveKeeper(direction) {
-
-    if (direction === "left") {
-
-        keeper.style.left = "25%";
-        keeper.style.transform =
-            "translate(-50%, -50%) rotate(-25deg)";
-
-    }
-
-    if (direction === "center") {
-
-        keeper.style.left = "50%";
-        keeper.style.transform =
-            "translate(-50%, -50%)";
-
-    }
-
-    if (direction === "right") {
-
-        keeper.style.left = "75%";
-        keeper.style.transform =
-            "translate(-50%, -50%) rotate(25deg)";
-
-    }
-}
-
-function resetPositions() {
+function resetScene() {
 
     ball.style.left = "50%";
-    ball.style.bottom = "-55px";
+
+    ball.style.bottom = "92px";
+
+    ball.style.transform =
+        "translateX(-50%)";
+
 
     keeper.style.left = "50%";
+
     keeper.style.transform =
-        "translate(-50%, -50%)";
+        "translateX(-50%)";
 }
+
 
 function endGame() {
 
     gameRunning = false;
+
 
     if (goals > bestScore) {
 
@@ -174,29 +226,46 @@ function endGame() {
         result.textContent =
             `🏆 NEW RECORD! ${goals}/${TOTAL_SHOTS}`;
 
-    } else if (goals >= 4) {
+    }
+
+    else if (goals === 5) {
+
+        result.textContent =
+            "🔥 PERFECT SHOOTOUT! 5/5";
+
+    }
+
+    else if (goals >= 4) {
 
         result.textContent =
             `🏆 AMAZING! ${goals}/${TOTAL_SHOTS}`;
 
-    } else if (goals >= 3) {
+    }
+
+    else if (goals >= 3) {
 
         result.textContent =
-            `🔥 GREAT SHOOTOUT! ${goals}/${TOTAL_SHOTS}`;
+            `🔥 GREAT JOB! ${goals}/${TOTAL_SHOTS}`;
 
-    } else if (goals >= 1) {
+    }
+
+    else if (goals >= 1) {
 
         result.textContent =
             `⚽ FINAL SCORE: ${goals}/${TOTAL_SHOTS}`;
 
-    } else {
+    }
+
+    else {
 
         result.textContent =
-            `😢 0 goals. Try again!`;
+            "😢 No goals! Try again!";
     }
+
 
     startButton.textContent =
         "🔄 PLAY AGAIN";
 
-    startButton.style.display = "block";
+    startButton.style.display =
+        "block";
 }
