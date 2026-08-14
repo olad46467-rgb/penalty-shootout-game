@@ -13,7 +13,7 @@ body {
 
 body {
     font-family: Arial, sans-serif;
-    background: #071a12;
+    background: #06130d;
     color: white;
     user-select: none;
     overflow-x: hidden;
@@ -24,184 +24,469 @@ body {
     max-width: 500px;
     min-height: 100vh;
     margin: auto;
-    padding: 18px 15px 20px;
+    padding: 14px 14px 20px;
     text-align: center;
 }
 
 h1 {
-    margin: 5px 0;
-    font-size: 28px;
+    margin: 4px 0;
+    font-size: 27px;
 }
 
 #playerName {
-    margin: 0 0 14px;
+    margin: 0 0 10px;
     color: #b8c8bf;
+    font-size: 14px;
 }
+
+
+/* SCOREBOARD */
 
 .scoreboard {
     display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 7px;
+    margin-bottom: 10px;
 }
 
-.scoreboard div {
+.score-box {
     flex: 1;
-    background: #123524;
-    border: 1px solid #24563a;
-    border-radius: 12px;
-    padding: 8px 4px;
+    background: #10291b;
+    border: 1px solid #285b3b;
+    border-radius: 11px;
+    padding: 7px 4px;
 }
 
-.scoreboard span {
+.score-box span {
     display: block;
-    font-size: 11px;
-    color: #a8c5b2;
+    font-size: 10px;
+    color: #9db8a7;
 }
 
-.scoreboard strong {
+.score-box strong {
     display: block;
-    margin-top: 3px;
-    font-size: 23px;
+    margin-top: 2px;
+    font-size: 21px;
 }
 
-.stadium {
+
+/* FOOTBALL PITCH */
+
+.pitch {
     position: relative;
-    height: 310px;
+    width: 100%;
+    height: 360px;
     overflow: hidden;
+    border: 2px solid #3b7e4e;
     border-radius: 18px;
-    border: 2px solid #2f7048;
-    background: #17833f;
-}
-
-.stadium::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-        90deg,
-        rgba(255,255,255,0.04) 0,
-        rgba(255,255,255,0.04) 45px,
-        rgba(0,0,0,0.04) 45px,
-        rgba(0,0,0,0.04) 90px
-    );
-}
-
-.goal {
-    position: absolute;
-    top: 28px;
-    left: 8%;
-    width: 84%;
-    height: 205px;
-    border: 5px solid white;
-    border-bottom: 8px solid white;
     background:
-        linear-gradient(
-            90deg,
-            transparent 48%,
-            rgba(255,255,255,0.25) 49%,
-            rgba(255,255,255,0.25) 51%,
-            transparent 52%
-        ),
         repeating-linear-gradient(
-            0deg,
-            rgba(255,255,255,0.13) 0,
-            rgba(255,255,255,0.13) 2px,
-            transparent 2px,
-            transparent 20px
+            90deg,
+            #188441 0px,
+            #188441 45px,
+            #197c3e 45px,
+            #197c3e 90px
         );
 }
 
-#keeper {
+
+/* FIELD LINES */
+
+.pitch::before {
+    content: "";
     position: absolute;
-    left: 50%;
-    top: 55%;
-    transform: translate(-50%, -50%);
-    font-size: 58px;
+    width: 70%;
+    height: 150px;
+    left: 15%;
+    top: 12px;
+    border: 2px solid rgba(255,255,255,0.65);
+    border-bottom: none;
+}
+
+.pitch::after {
+    content: "";
+    position: absolute;
+    width: 38%;
+    height: 70px;
+    left: 31%;
+    top: 12px;
+    border: 2px solid rgba(255,255,255,0.55);
+    border-top: none;
+    border-radius: 0 0 50% 50%;
+}
+
+
+/* GOAL */
+
+.goal-area {
+    position: absolute;
+    width: 76%;
+    height: 150px;
+    left: 12%;
+    top: 15px;
     z-index: 3;
-    transition: all 0.35s ease;
 }
 
-#ball {
+
+/* NET */
+
+.goal-net {
     position: absolute;
-    bottom: -55px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 45px;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0,
+            transparent 12px,
+            rgba(255,255,255,0.18) 13px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 12px,
+            rgba(255,255,255,0.18) 13px
+        );
+
+    border: 3px solid rgba(255,255,255,0.8);
+}
+
+
+/* GOAL POSTS */
+
+.goal-post {
+    position: absolute;
+    width: 8px;
+    height: 150px;
+    background: white;
+    top: 0;
     z-index: 5;
-    transition: all 0.4s ease;
+    border-radius: 3px;
 }
 
-#result {
-    position: absolute;
+.left-post {
     left: 0;
+}
+
+.right-post {
     right: 0;
-    bottom: 12px;
+}
+
+.goal-crossbar {
+    position: absolute;
+    height: 8px;
+    width: 100%;
+    background: white;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    border-radius: 3px;
+}
+
+
+/* GOALKEEPER */
+
+.keeper {
+    position: absolute;
+    width: 55px;
+    height: 95px;
+    left: 50%;
+    top: 45px;
+    transform: translateX(-50%);
+    z-index: 8;
+    transition:
+        left 0.35s ease,
+        transform 0.35s ease;
+}
+
+
+/* KEEPER HEAD */
+
+.keeper-head {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 15px;
+    top: 0;
+    border-radius: 50%;
+    background: #f1b27a;
+    border: 2px solid #8b512e;
+}
+
+
+/* KEEPER BODY */
+
+.keeper-body {
+    position: absolute;
+    width: 32px;
+    height: 43px;
+    left: 11px;
+    top: 25px;
+    border-radius: 9px 9px 5px 5px;
+    background: #e91e35;
+    border: 2px solid #a30d1d;
+}
+
+
+/* KEEPER ARMS */
+
+.keeper-arm {
+    position: absolute;
+    width: 10px;
+    height: 42px;
+    background: #e91e35;
+    border-radius: 8px;
+    top: 24px;
+}
+
+.keeper .left-arm {
+    left: 1px;
+    transform: rotate(35deg);
+}
+
+.keeper .right-arm {
+    right: 1px;
+    transform: rotate(-35deg);
+}
+
+
+/* KEEPER LEGS */
+
+.keeper-leg {
+    position: absolute;
+    width: 10px;
+    height: 31px;
+    background: #202733;
+    border-radius: 7px;
+    top: 65px;
+}
+
+.keeper .left-leg {
+    left: 14px;
+    transform: rotate(8deg);
+}
+
+.keeper .right-leg {
+    right: 14px;
+    transform: rotate(-8deg);
+}
+
+
+/* BALL */
+
+.ball {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    left: 50%;
+    bottom: 92px;
+    transform: translateX(-50%);
+    font-size: 39px;
+    line-height: 42px;
+    z-index: 15;
+
+    transition:
+        left 0.4s ease,
+        bottom 0.4s ease,
+        transform 0.4s ease;
+}
+
+
+/* KICKER */
+
+.kicker {
+    position: absolute;
+    width: 65px;
+    height: 110px;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
     z-index: 10;
+}
+
+
+/* KICKER HEAD */
+
+.kicker-head {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    left: 18px;
+    top: 0;
+    border-radius: 50%;
+    background: #d9935f;
+    border: 2px solid #754326;
+}
+
+
+/* KICKER BODY */
+
+.kicker-body {
+    position: absolute;
+    width: 36px;
+    height: 47px;
+    left: 14px;
+    top: 27px;
+    border-radius: 9px;
+    background: #1685d1;
+    border: 2px solid #07578d;
+}
+
+
+/* KICKER ARMS */
+
+.kicker-arm {
+    position: absolute;
+    width: 10px;
+    height: 40px;
+    background: #1685d1;
+    border-radius: 8px;
+    top: 29px;
+}
+
+.kicker .left-arm {
+    left: 3px;
+    transform: rotate(25deg);
+}
+
+.kicker .right-arm {
+    right: 3px;
+    transform: rotate(-25deg);
+}
+
+
+/* KICKER LEGS */
+
+.kicker-leg {
+    position: absolute;
+    width: 11px;
+    height: 37px;
+    background: #222b35;
+    border-radius: 8px;
+    top: 69px;
+}
+
+.kicker .left-leg {
+    left: 18px;
+    transform: rotate(7deg);
+}
+
+.kicker .right-leg {
+    right: 18px;
+    transform: rotate(-7deg);
+}
+
+
+/* RESULT */
+
+.result {
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    bottom: 128px;
+    z-index: 20;
+
     font-size: 17px;
     font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+    text-shadow:
+        0 2px 5px rgba(0,0,0,0.8);
 }
+
+
+/* CONTROLS */
 
 .controls {
     display: flex;
-    gap: 8px;
-    margin-top: 12px;
+    gap: 7px;
+    margin-top: 10px;
 }
 
 .controls button {
     flex: 1;
-    min-height: 60px;
+    min-height: 58px;
     border: none;
-    border-radius: 13px;
-    background: #f4f7f5;
+    border-radius: 12px;
+
+    background: #f5f7f6;
     color: #102218;
-    font-size: 21px;
+
+    font-size: 14px;
     font-weight: bold;
+
     cursor: pointer;
     touch-action: manipulation;
 }
 
-.controls button span {
+.controls button .arrow {
     display: block;
-    font-size: 11px;
-    margin-top: 3px;
+    font-size: 20px;
+    margin-bottom: 2px;
 }
 
 .controls button:active {
-    transform: scale(0.95);
+    transform: scale(0.94);
 }
+
+
+/* START BUTTON */
 
 #startButton {
     width: 100%;
-    margin-top: 12px;
+    margin-top: 10px;
     padding: 14px;
+
     border: none;
-    border-radius: 13px;
+    border-radius: 12px;
+
     background: #229ed9;
     color: white;
+
     font-size: 17px;
     font-weight: bold;
+
     cursor: pointer;
 }
 
-@media (max-height: 650px) {
+
+/* RESPONSIVE */
+
+@media (max-height: 680px) {
+
     .game {
-        padding-top: 8px;
+        padding-top: 7px;
     }
 
     h1 {
         font-size: 24px;
     }
 
-    .stadium {
-        height: 250px;
+    .pitch {
+        height: 315px;
     }
 
-    .goal {
-        height: 170px;
+    .goal-area {
+        height: 130px;
     }
 
-    #keeper {
-        font-size: 48px;
+    .goal-post {
+        height: 130px;
+    }
+
+    .keeper {
+        transform: translateX(-50%) scale(0.85);
+        transform-origin: top center;
+    }
+
+    .kicker {
+        transform: translateX(-50%) scale(0.85);
+        transform-origin: bottom center;
+    }
+
+    .ball {
+        bottom: 80px;
+    }
+
+    .result {
+        bottom: 112px;
     }
 }
