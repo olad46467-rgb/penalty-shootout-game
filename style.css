@@ -1,0 +1,207 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #071a12;
+    color: white;
+    user-select: none;
+    overflow-x: hidden;
+}
+
+.game {
+    width: 100%;
+    max-width: 500px;
+    min-height: 100vh;
+    margin: auto;
+    padding: 18px 15px 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 5px 0;
+    font-size: 28px;
+}
+
+#playerName {
+    margin: 0 0 14px;
+    color: #b8c8bf;
+}
+
+.scoreboard {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.scoreboard div {
+    flex: 1;
+    background: #123524;
+    border: 1px solid #24563a;
+    border-radius: 12px;
+    padding: 8px 4px;
+}
+
+.scoreboard span {
+    display: block;
+    font-size: 11px;
+    color: #a8c5b2;
+}
+
+.scoreboard strong {
+    display: block;
+    margin-top: 3px;
+    font-size: 23px;
+}
+
+.stadium {
+    position: relative;
+    height: 310px;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 2px solid #2f7048;
+    background: #17833f;
+}
+
+.stadium::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.04) 0,
+        rgba(255,255,255,0.04) 45px,
+        rgba(0,0,0,0.04) 45px,
+        rgba(0,0,0,0.04) 90px
+    );
+}
+
+.goal {
+    position: absolute;
+    top: 28px;
+    left: 8%;
+    width: 84%;
+    height: 205px;
+    border: 5px solid white;
+    border-bottom: 8px solid white;
+    background:
+        linear-gradient(
+            90deg,
+            transparent 48%,
+            rgba(255,255,255,0.25) 49%,
+            rgba(255,255,255,0.25) 51%,
+            transparent 52%
+        ),
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.13) 0,
+            rgba(255,255,255,0.13) 2px,
+            transparent 2px,
+            transparent 20px
+        );
+}
+
+#keeper {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -50%);
+    font-size: 58px;
+    z-index: 3;
+    transition: all 0.35s ease;
+}
+
+#ball {
+    position: absolute;
+    bottom: -55px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 45px;
+    z-index: 5;
+    transition: all 0.4s ease;
+}
+
+#result {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    z-index: 10;
+    font-size: 17px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.controls button {
+    flex: 1;
+    min-height: 60px;
+    border: none;
+    border-radius: 13px;
+    background: #f4f7f5;
+    color: #102218;
+    font-size: 21px;
+    font-weight: bold;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.controls button span {
+    display: block;
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.controls button:active {
+    transform: scale(0.95);
+}
+
+#startButton {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    border: none;
+    border-radius: 13px;
+    background: #229ed9;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media (max-height: 650px) {
+    .game {
+        padding-top: 8px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .stadium {
+        height: 250px;
+    }
+
+    .goal {
+        height: 170px;
+    }
+
+    #keeper {
+        font-size: 48px;
+    }
+}
