@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0,
           maximum-scale=1.0, user-scalable=no">
@@ -19,59 +20,105 @@
 
     <h1>⚽ Penalty Shootout</h1>
 
-    <p id="playerName">Welcome!</p>
+    <p id="playerName">Welcome, Player!</p>
 
     <div class="scoreboard">
-        <div>
+
+        <div class="score-box">
             <span>GOALS</span>
             <strong id="goals">0</strong>
         </div>
 
-        <div>
+        <div class="score-box">
             <span>SHOTS</span>
             <strong id="shots">0/5</strong>
         </div>
 
-        <div>
+        <div class="score-box">
             <span>BEST</span>
             <strong id="best">0</strong>
         </div>
+
     </div>
 
-    <div class="stadium">
 
-        <div class="goal">
+    <div class="pitch">
 
-            <div id="keeper">🧤</div>
+        <!-- Goal -->
+        <div class="goal-area">
 
-            <div id="ball">⚽</div>
+            <div class="goal-net"></div>
+
+            <div class="goal-post left-post"></div>
+            <div class="goal-post right-post"></div>
+            <div class="goal-crossbar"></div>
+
+            <!-- Goalkeeper -->
+            <div id="keeper" class="keeper">
+
+                <div class="keeper-head"></div>
+
+                <div class="keeper-body"></div>
+
+                <div class="keeper-arm left-arm"></div>
+                <div class="keeper-arm right-arm"></div>
+
+                <div class="keeper-leg left-leg"></div>
+                <div class="keeper-leg right-leg"></div>
+
+            </div>
 
         </div>
 
-        <div id="result">
+
+        <!-- Ball -->
+        <div id="ball" class="ball">⚽</div>
+
+
+        <!-- Kicker -->
+        <div id="kicker" class="kicker">
+
+            <div class="kicker-head"></div>
+
+            <div class="kicker-body"></div>
+
+            <div class="kicker-arm left-arm"></div>
+            <div class="kicker-arm right-arm"></div>
+
+            <div class="kicker-leg left-leg"></div>
+            <div class="kicker-leg right-leg"></div>
+
+        </div>
+
+
+        <div id="result" class="result">
             Choose where to shoot!
         </div>
 
     </div>
 
+
+    <!-- Shooting controls -->
+
     <div class="controls">
 
         <button onclick="shoot('left')">
-            ⬅️
-            <span>LEFT</span>
+            <span class="arrow">⬅️</span>
+            LEFT
         </button>
 
         <button onclick="shoot('center')">
-            ⬆️
-            <span>CENTER</span>
+            <span class="arrow">⬆️</span>
+            CENTER
         </button>
 
         <button onclick="shoot('right')">
-            ➡️
-            <span>RIGHT</span>
+            <span class="arrow">➡️</span>
+            RIGHT
         </button>
 
     </div>
+
 
     <button id="startButton" onclick="startGame()">
         🚀 START SHOOTOUT
