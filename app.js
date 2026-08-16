@@ -1,21 +1,98 @@
-const tg = window.Telegram.WebApp;
+const tg = window.Telegram?.WebApp;
+
+/*
+ * Telegram-only access
+ */
+if (!tg || !tg.initData) {
+
+    document.body.innerHTML = `
+        <div style="
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            padding:30px;
+            margin:0;
+            background:#071a12;
+            color:white;
+            font-family:Arial,sans-serif;
+        ">
+            <div style="max-width:420px;">
+
+                <div style="
+                    font-size:64px;
+                    margin-bottom:15px;
+                ">
+                    ⚽
+                </div>
+
+                <h2 style="
+                    margin:0 0 12px;
+                    font-size:24px;
+                ">
+                    Game available on Telegram
+                </h2>
+
+                <p style="
+                    color:#c8d5cd;
+                    font-size:16px;
+                    line-height:1.5;
+                    margin:8px 0;
+                ">
+                    This game can only be played inside Telegram.
+                </p>
+
+                <p style="
+                    color:#c8d5cd;
+                    font-size:15px;
+                    line-height:1.5;
+                ">
+                    Open it from our Telegram bot to start playing! 🚀
+                </p>
+
+            </div>
+        </div>
+    `;
+
+    throw new Error("Telegram Mini App required");
+}
 
 tg.ready();
 tg.expand();
 
+
+/*
+ * Game variables
+ */
 let goals = 0;
 let shots = 0;
 let gameRunning = false;
 
 const TOTAL_SHOTS = 5;
 
+
+/*
+ * Telegram user
+ */
 const user = tg.initDataUnsafe?.user;
 
 if (user) {
-    document.getElementById("playerName").textContent =
-        `👋 ${user.first_name}`;
+
+    const playerName =
+        document.getElementById("playerName");
+
+    if (playerName) {
+
+        playerName.textContent =
+            `👋 ${user.first_name}`;
+    }
 }
 
+
+/*
+ * Best score
+ */
 let bestScore =
     Number(localStorage.getItem("penaltyBest")) || 0;
 
@@ -23,13 +100,28 @@ document.getElementById("best").textContent =
     bestScore;
 
 
-const keeper = document.getElementById("keeper");
-const ball = document.getElementById("ball");
-const kicker = document.getElementById("kicker");
-const result = document.getElementById("result");
-const startButton = document.getElementById("startButton");
+/*
+ * Elements
+ */
+const keeper =
+    document.getElementById("keeper");
+
+const ball =
+    document.getElementById("ball");
+
+const kicker =
+    document.getElementById("kicker");
+
+const result =
+    document.getElementById("result");
+
+const startButton =
+    document.getElementById("startButton");
 
 
+/*
+ * Start game
+ */
 function startGame() {
 
     goals = 0;
@@ -37,7 +129,8 @@ function startGame() {
 
     gameRunning = true;
 
-    document.getElementById("goals").textContent = "0";
+    document.getElementById("goals").textContent =
+        "0";
 
     document.getElementById("shots").textContent =
         `0/${TOTAL_SHOTS}`;
@@ -45,20 +138,24 @@ function startGame() {
     result.textContent =
         "🎯 Choose where to shoot!";
 
-    startButton.style.display = "none";
+    startButton.style.display =
+        "none";
 
     resetScene();
 }
 
 
+/*
+ * Shoot
+ */
 function shoot(direction) {
 
     if (!gameRunning) return;
 
     if (shots >= TOTAL_SHOTS) return;
 
-
     shots++;
+
 
     const directions = [
         "left",
@@ -70,26 +167,28 @@ function shoot(direction) {
     const keeperDirection =
         directions[
             Math.floor(
-                Math.random() * directions.length
+                Math.random() *
+                directions.length
             )
         ];
 
 
-    // Kicker movement
-
+    /*
+     * Kicker animation
+     */
     kicker.style.transform =
         "translateX(-50%) rotate(-8deg)";
 
 
-    // Move ball
-
+    /*
+     * Ball movement
+     */
     if (direction === "left") {
 
         ball.style.left = "28%";
         ball.style.bottom = "245px";
         ball.style.transform =
             "translateX(-50%) scale(0.72)";
-
     }
 
 
@@ -99,7 +198,6 @@ function shoot(direction) {
         ball.style.bottom = "260px";
         ball.style.transform =
             "translateX(-50%) scale(0.68)";
-
     }
 
 
@@ -112,15 +210,15 @@ function shoot(direction) {
     }
 
 
-    // Goalkeeper movement
-
+    /*
+     * Goalkeeper movement
+     */
     if (keeperDirection === "left") {
 
         keeper.style.left = "25%";
 
         keeper.style.transform =
             "translateX(-50%) rotate(-35deg)";
-
     }
 
 
@@ -142,8 +240,9 @@ function shoot(direction) {
     }
 
 
-    // Determine result
-
+    /*
+     * Result
+     */
     if (direction === keeperDirection) {
 
         result.textContent =
@@ -165,13 +264,13 @@ function shoot(direction) {
         `${shots}/${TOTAL_SHOTS}`;
 
 
-    // Prepare next shot
-
+    /*
+     * Next shot
+     */
     setTimeout(() => {
 
         kicker.style.transform =
             "translateX(-50%)";
-
 
         if (shots >= TOTAL_SHOTS) {
 
@@ -189,23 +288,32 @@ function shoot(direction) {
 }
 
 
+/*
+ * Reset scene
+ */
 function resetScene() {
 
-    ball.style.left = "50%";
+    ball.style.left =
+        "50%";
 
-    ball.style.bottom = "92px";
+    ball.style.bottom =
+        "92px";
 
     ball.style.transform =
         "translateX(-50%)";
 
 
-    keeper.style.left = "50%";
+    keeper.style.left =
+        "50%";
 
     keeper.style.transform =
         "translateX(-50%)";
 }
 
 
+/*
+ * End game
+ */
 function endGame() {
 
     gameRunning = false;
@@ -226,37 +334,27 @@ function endGame() {
         result.textContent =
             `🏆 NEW RECORD! ${goals}/${TOTAL_SHOTS}`;
 
-    }
-
-    else if (goals === 5) {
+    } else if (goals === 5) {
 
         result.textContent =
             "🔥 PERFECT SHOOTOUT! 5/5";
 
-    }
-
-    else if (goals >= 4) {
+    } else if (goals >= 4) {
 
         result.textContent =
             `🏆 AMAZING! ${goals}/${TOTAL_SHOTS}`;
 
-    }
-
-    else if (goals >= 3) {
+    } else if (goals >= 3) {
 
         result.textContent =
             `🔥 GREAT JOB! ${goals}/${TOTAL_SHOTS}`;
 
-    }
-
-    else if (goals >= 1) {
+    } else if (goals >= 1) {
 
         result.textContent =
             `⚽ FINAL SCORE: ${goals}/${TOTAL_SHOTS}`;
 
-    }
-
-    else {
+    } else {
 
         result.textContent =
             "😢 No goals! Try again!";
